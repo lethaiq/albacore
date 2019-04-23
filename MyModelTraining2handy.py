@@ -159,8 +159,6 @@ def data_reader(fps, word2id=None, y_len=1, use_target_description=False, use_im
     print ("Deleted number of items: " + str(num))
     return ids, post_texts, truth_classes, post_text_lens, truth_means, target_descriptions, target_description_lens, image_features
 
-
-
 def Sequence_pader(sequences, maxlen):
     if maxlen <= 0:
         return sequences
@@ -245,7 +243,7 @@ with open(os.path.join('data', 'word2id.json'), 'w') as fout:
     json.dump(word2id, fp=fout)
     
 
-ids, post_texts, truth_classes, post_text_lens, truth_means, target_descriptions, target_description_lens, image_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'P_test'), os.path.join('data', 'P_train')], y_len=1, use_target_description=False, use_image=False)
+ids, post_texts, truth_classes, post_text_lens, truth_means, target_descriptions, target_description_lens, image_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'P_test'), os.path.join('data', 'P_train')], y_len=2, use_target_description=False, use_image=False)
 post_texts = np.array(post_texts)
 truth_classes = np.array(truth_classes)
 post_text_lens = np.array(post_text_lens)
@@ -256,7 +254,7 @@ truth_classes = truth_classes[shuffle_indices]
 post_text_lens = post_text_lens[shuffle_indices]
 truth_means = truth_means[shuffle_indices]
 max_post_text_len = max(post_text_lens)
-print(max_post_text_len)
+print("max_post_text_len", max_post_text_len)
 
 post_texts = Sequence_pader(post_texts, max_post_text_len)
 
@@ -265,13 +263,11 @@ target_description_lens = np.array(target_description_lens)
 target_descriptions = target_descriptions[shuffle_indices]
 target_description_lens = target_description_lens[shuffle_indices]
 max_target_description_len = max(target_description_lens)
-print(max_target_description_len)
+print("max_target_description_len", max_target_description_len)
 target_descriptions = Sequence_pader(target_descriptions, max_target_description_len)
 
 
-
-
-tetids, tepost_texts, tetruth_classes, tepost_text_lens, tetruth_means, tetarget_descriptions, tetarget_description_lens, teimage_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'P_test')], y_len=1, use_target_description=False, use_image=False)    
+tetids, tepost_texts, tetruth_classes, tepost_text_lens, tetruth_means, tetarget_descriptions, tetarget_description_lens, teimage_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'P_test')], y_len=2, use_target_description=False, use_image=False)    
 tepost_texts = np.array(tepost_texts)
 tetruth_classes = np.array(tetruth_classes)
 tepost_text_lens = [each_len if each_len <= max_post_text_len else max_post_text_len for each_len in tepost_text_lens]
@@ -309,11 +305,11 @@ model.add(Bidirectional(GRU(512, dropout=0.2, recurrent_dropout=0.5)))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
 
-model.compile(loss='mse', optimizer='rmsprop')
+model.compile(loss='categorical_cross_entropy', optimizer='rmsprop')
 
 batch_size = 64
 
-earlystop_cb = keras.callbacks.EarlyStopping(monitor='mse', patience=7, verbose=1, mode='auto')
+earlystop_cb = keras.callbacks.EarlyStopping(monitor='categorical_cross_entropy', patience=7, verbose=1, mode='auto')
 
 model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=20,
           validation_split=0.1, callbacks=[earlystop_cb])
