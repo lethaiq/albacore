@@ -309,7 +309,7 @@ model.compile(loss='mse', optimizer='adagrad')
 
 batch_size = 64
 
-earlystop_cb = keras.callbacks.EarlyStopping(monitor='mse', patience=7, verbose=1, mode='auto')
+earlystop_cb = keras.callbacks.EarlyStopping(monitor='val_loss', patience=7, verbose=1, mode='auto')
 
 model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=20, validation_split=0.1, callbacks=[earlystop_cb])
 
@@ -329,8 +329,6 @@ for i in range(len(tetruth_means)):
         tetruthClass.append(1)
     else:
         tetruthClass.append(0)
-
-
 
 mse = metrics.mean_squared_error(tetruth_means,petruth_means)
 print('Mean Squared Error = '+str(mse))
