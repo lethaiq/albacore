@@ -303,7 +303,9 @@ model.add(Embedding(input_dim = max_features,
                     ,trainable = False))
 model.add(Dropout(dropout_embedding))
 
-model.add(Bidirectional(GRU(512, dropout_W=0.2, dropout_U=0.5)))  
+# model.add(Bidirectional(GRU(512, dropout_W=0.2, dropout_U=0.5)))  
+model.add(Bidirectional(GRU(512, dropout=0.2, recurrent_dropout=0.5)))  
+
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
 
