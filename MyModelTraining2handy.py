@@ -15,7 +15,6 @@ Created on Thu Apr 26 19:14:36 2018
 #f1_score = 0.65695253955
 
 
-import sys
 from __future__ import print_function
 from sklearn.model_selection import KFold
 import numpy as np
@@ -34,6 +33,8 @@ import keras.callbacks
 import re
 import nltk
 from tweet_utils import *
+import sys
+
 
 PAD = "<pad>"  
 UNK = "<unk>"  
