@@ -311,8 +311,7 @@ batch_size = 64
 
 earlystop_cb = keras.callbacks.EarlyStopping(monitor='mse', patience=7, verbose=1, mode='auto')
 
-model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=20,
-          validation_split=0.1, callbacks=[earlystop_cb])
+model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=20, validation_split=0.1, callbacks=[earlystop_cb])
 
 petruth_means = model.predict(X_test)
 tetruthClass = []
@@ -347,3 +346,6 @@ print('recall_score = '+str(recall))
 
 f1 = metrics.f1_score(tetruthClass,petruthClass)
 print('f1_score = '+str(f1))
+
+auc = metrics.roc_auc_score(tetruthClass,petruthClass)
+print('auc = '+str(auc))
