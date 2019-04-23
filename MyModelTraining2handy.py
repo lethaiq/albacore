@@ -312,7 +312,7 @@ batch_size = 64
 
 earlystop_cb = keras.callbacks.EarlyStopping(monitor='val_loss', patience=7, verbose=1, mode='auto')
 
-model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=20, validation_split=0.1, callbacks=[earlystop_cb])
+model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=30, validation_split=0.1, callbacks=[earlystop_cb])
 
 petruth_means = model.predict(X_test)
 tetruthClass = []
