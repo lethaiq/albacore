@@ -305,7 +305,7 @@ model.add(Bidirectional(GRU(512, dropout=0.2, recurrent_dropout=0.5)))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
 
-model.compile(loss='mse', optimizer='rmsprop')
+model.compile(loss='mse', optimizer='adagrad')
 
 batch_size = 64
 
