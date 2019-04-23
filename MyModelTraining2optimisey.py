@@ -233,11 +233,6 @@ def tweet_processor(text):
 
     return text
 
-
-
-
-
-
 def main(argv=None):
 
     with open('MyModelTraining2optimise.txt', "w") as myfile:           
