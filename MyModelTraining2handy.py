@@ -245,7 +245,7 @@ with open(os.path.join('data', 'word2id.json'), 'w') as fout:
     json.dump(word2id, fp=fout)
     
 
-ids, post_texts, truth_classes, post_text_lens, truth_means, target_descriptions, target_description_lens, image_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'clickbait17-validation'), os.path.join('data', 'clickbait17-train-170331')], y_len=4, use_target_description=False, use_image=False)
+ids, post_texts, truth_classes, post_text_lens, truth_means, target_descriptions, target_description_lens, image_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'P_test'), os.path.join('data', 'P_train')], y_len=2, use_target_description=False, use_image=False)
 post_texts = np.array(post_texts)
 truth_classes = np.array(truth_classes)
 post_text_lens = np.array(post_text_lens)
@@ -271,7 +271,7 @@ target_descriptions = Sequence_pader(target_descriptions, max_target_description
 
 
 
-tetids, tepost_texts, tetruth_classes, tepost_text_lens, tetruth_means, tetarget_descriptions, tetarget_description_lens, teimage_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'clickbait17-test')], y_len=4, use_target_description=False, use_image=False)    
+tetids, tepost_texts, tetruth_classes, tepost_text_lens, tetruth_means, tetarget_descriptions, tetarget_description_lens, teimage_features = data_reader(word2id=word2id, fps=[os.path.join('data', 'P_test')], y_len=2, use_target_description=False, use_image=False)    
 tepost_texts = np.array(tepost_texts)
 tetruth_classes = np.array(tetruth_classes)
 tepost_text_lens = [each_len if each_len <= max_post_text_len else max_post_text_len for each_len in tepost_text_lens]
